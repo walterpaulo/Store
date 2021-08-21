@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Store.Services;
 
 namespace Store
 {
@@ -16,6 +18,7 @@ namespace Store
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase(databaseName:"test"));
             services.AddMvc(option => option.EnableEndpointRouting = false);
             
         }
@@ -27,7 +30,7 @@ namespace Store
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
             app.UseMvc();
         }
